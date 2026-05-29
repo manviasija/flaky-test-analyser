@@ -21,3 +21,9 @@ jobs:
         run: npx playwright install chromium
       - name: Run Playwright tests
         run: npx playwright test --reporter=json
+      - name: Run flaky‑detector (optional)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Ensure ts-node is available (installed via devDependencies)
+          npx ts-node scripts/flaky-detector.ts test-results/report.json
