@@ -9,26 +9,37 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+
       - name: Install dependencies
         run: npm ci
+
       - name: Install Playwright browsers
         run: npx playwright install chromium
+
       - name: Run Playwright tests
-        run: npx playwright test --reporter=json:output=test-results/report.json --output=test-results
+        run: |
+          mkdir -p test-results
+          npx playwright test --reporter=json > test-results/test-results.json
+
       - name: Run flaky-detector (optional)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           REPORT="test-results/test-results.json"
+
           if [ ! -f "$REPORT" ]; then
             echo "Playwright JSON report not found at $REPORT – skipping flaky-detector."
             exit 0
           fi
+
           echo "Running flaky-detector on $REPORT"
+
           npx ts-node scripts/flaky-detector.ts "$REPORT"
