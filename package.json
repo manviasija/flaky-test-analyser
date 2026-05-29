@@ -1,0 +1,23 @@
+{
+  "name": "locator-finder",
+  "version": "1.0.0",
+  "description": "Playwright E2E testing project",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:json": "npx playwright test --reporter=json",
+    "build": "tsc",
+    "dev": "ts-node scripts/flaky-detector.ts"
+  },
+  "author": "QA Engineer",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.98.0"
+  }
+}
