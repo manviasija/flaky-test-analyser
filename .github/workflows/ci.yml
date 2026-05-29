@@ -25,15 +25,13 @@ jobs:
         run: npx playwright install chromium
 
       - name: Run Playwright tests
-        run: |
-          mkdir -p test-results
-          npx playwright test --reporter=json > test-results/test-results.json
+        run: npx playwright test --reporter=json > playwright-report.json 2>&1
 
       - name: Run flaky-detector (optional)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          REPORT="test-results/test-results.json"
+          REPORT="playwright-report.json"
 
           if [ ! -f "$REPORT" ]; then
             echo "Playwright JSON report not found at $REPORT – skipping flaky-detector."
