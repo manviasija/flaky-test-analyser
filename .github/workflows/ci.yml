@@ -20,7 +20,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install chromium
       - name: Run Playwright tests
-        run: npx playwright test --reporter=json:test-results/report.json
+        run: npx playwright test --reporter=json --output=test-results
       - name: Run flaky-detector (optional)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
